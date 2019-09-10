@@ -1,0 +1,24 @@
+PODS:
+  - VXRecognitionViewController/Core (1.0.1):
+    - Zip
+  - Zip (1.1.0)
+
+DEPENDENCIES:
+  - VXRecognitionViewController/Core (from `../../VXRecognitionViewController`)
+  - Zip
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Zip
+
+EXTERNAL SOURCES:
+  VXRecognitionViewController:
+    :path: "../../VXRecognitionViewController"
+
+SPEC CHECKSUMS:
+  VXRecognitionViewController: 8043790cbc803ad34ec79d3d4e37d1d9f2c6933e
+  Zip: 8877eede3dda76bcac281225c20e71c25270774c
+
+PODFILE CHECKSUM: 1c6f54055f0606ae3c2d0edb30cc625cf11fd2d6
+
+COCOAPODS: 1.7.5

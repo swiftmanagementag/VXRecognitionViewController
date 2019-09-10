@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol VXRecognitionModelProtocol: class {
     func load(completion: @escaping (Bool) -> Void)
