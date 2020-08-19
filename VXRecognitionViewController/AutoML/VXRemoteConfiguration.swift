@@ -6,8 +6,8 @@
 //  Copyright © 2019 Swift Management AG. All rights reserved.
 //
 
-import Foundation
 import Firebase
+import Foundation
 
 public enum VXRemoteConfigurationKeys: String {
     case detection_model
@@ -17,18 +17,18 @@ public enum VXRemoteConfigurationKeys: String {
 public class VXRemoteConfiguration {
     static let shared = VXRemoteConfiguration()
 
-    private init(){
+    private init() {
         debugPrint("VXRemoteConfiguration: initialising")
         RemoteConfig.remoteConfig().configSettings = RemoteConfigSettings()
-        
+
         // set debug mode if needed
-        if Config.isDebug == true  {
+        if Config.isDebug == true {
             debugPrint("VXRemoteConfiguration: setting debug mode")
         }
-        
+
         // load defaults from bundle
         loadDefaults()
-        
+
         // load current values from cloud
         loadCloud()
     }
@@ -42,15 +42,14 @@ public class VXRemoteConfiguration {
             debugPrint("VXRemoteConfiguration: setting defaults with \(path). ")
         }
     }
-    
-    
+
     // load current values from cloud
     func loadCloud() {
         // define validity (default 12h)
-        //let expirationDuration: TimeInterval = Config.isDebug ? 0 : (12 * 60 * 60)
-        
+        // let expirationDuration: TimeInterval = Config.isDebug ? 0 : (12 * 60 * 60)
+
         // fetch values from firebase
-        RemoteConfig.remoteConfig().fetchAndActivate(completionHandler: { (status, error) in
+        RemoteConfig.remoteConfig().fetchAndActivate(completionHandler: { status, error in
             // check for error
             if let error = error {
                 print("VXRemoteConfiguration: error fetching remote values \(error)")
@@ -60,16 +59,17 @@ public class VXRemoteConfiguration {
             }
         })
     }
-    
+
     public func string(forKey key: VXRemoteConfigurationKeys) -> String {
-            let value = RemoteConfig.remoteConfig()[key.rawValue].stringValue ?? ""
-        
+        let value = RemoteConfig.remoteConfig()[key.rawValue].stringValue ?? ""
+
         debugPrint("VXRemoteConfiguration: retrieved string from the cloud \(key) -> \(value). ")
         return value
     }
+
     public func number(forKey key: VXRemoteConfigurationKeys) -> NSNumber {
         let value = RemoteConfig.remoteConfig()[key.rawValue].numberValue ?? 0.0
-        
+
         debugPrint("VXRemoteConfiguration: retrieved number from the cloud \(key) -> \(value). ")
         return value
     }

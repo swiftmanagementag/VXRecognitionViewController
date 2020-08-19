@@ -10,9 +10,8 @@ import Foundation
 import UIKit
 
 class VXRecognitionCell: UICollectionViewCell {
-    
-    public var prediction:VXRecognitionPrediction? = nil
-    
+    public var prediction: VXRecognitionPrediction?
+
     lazy var photoView: UIImageView = {
         let view = UIImageView()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -23,9 +22,10 @@ class VXRecognitionCell: UICollectionViewCell {
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 3
         view.layer.cornerRadius = 16
-        view.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMinYCorner, .layerMaxXMaxYCorner,.layerMinXMinYCorner]
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMinYCorner]
         return view
     }()
+
     lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -38,6 +38,7 @@ class VXRecognitionCell: UICollectionViewCell {
         view.textColor = UIColor.white
         return view
     }()
+
     lazy var confidenceLabel: UILabel = {
         let view = UILabel()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -49,10 +50,11 @@ class VXRecognitionCell: UICollectionViewCell {
         view.textColor = UIColor.white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
-        view.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMinYCorner]
-        
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner]
+
         return view
     }()
+
     lazy var labelBackgroundView: UIView = {
         let view = UIView()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -61,97 +63,97 @@ class VXRecognitionCell: UICollectionViewCell {
         view.alpha = 0.6
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
-        view.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-        
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
         return view
     }()
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setup()
+        setup()
     }
-    required override init(frame: CGRect) {
+
+    override required init(frame: CGRect) {
         super.init(frame: frame)
-        self.setup()
+        setup()
     }
+
     func setup() {
-        self.backgroundColor = UIColor.clear
-        
+        backgroundColor = UIColor.clear
+
         // photoview
-        self.contentView.addSubview(self.photoView)
-        self.photoView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(photoView)
+        photoView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            self.photoView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            self.photoView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.photoView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
-            self.photoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
-            ])
+            photoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            photoView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            photoView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            photoView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+        ])
 
         //  label background view
-        self.contentView.addSubview(self.labelBackgroundView)
-        self.labelBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(labelBackgroundView)
+        labelBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.labelBackgroundView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            self.labelBackgroundView.heightAnchor.constraint(equalToConstant: 48.0),
-            self.labelBackgroundView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
-            self.labelBackgroundView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
-            ])
+            labelBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            labelBackgroundView.heightAnchor.constraint(equalToConstant: 48.0),
+            labelBackgroundView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            labelBackgroundView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+        ])
 
-        
         //  title label
-        self.contentView.addSubview(self.titleLabel)
-        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+        contentView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            self.titleLabel.bottomAnchor.constraint(equalTo: self.labelBackgroundView.bottomAnchor),
-            self.titleLabel.topAnchor.constraint(equalTo: self.labelBackgroundView.topAnchor),
-            self.titleLabel.leftAnchor.constraint(equalTo: self.labelBackgroundView.leftAnchor, constant: 4.0),
-            self.titleLabel.rightAnchor.constraint(equalTo: self.labelBackgroundView.rightAnchor, constant: -4.0),
-            ])
-        
-        
+            titleLabel.bottomAnchor.constraint(equalTo: labelBackgroundView.bottomAnchor),
+            titleLabel.topAnchor.constraint(equalTo: labelBackgroundView.topAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: labelBackgroundView.leftAnchor, constant: 4.0),
+            titleLabel.rightAnchor.constraint(equalTo: labelBackgroundView.rightAnchor, constant: -4.0),
+        ])
+
         //  confidence label
-        self.contentView.addSubview(self.confidenceLabel)
-        self.confidenceLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(confidenceLabel)
+        confidenceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.confidenceLabel.widthAnchor.constraint(equalToConstant: 48.0),
-            self.confidenceLabel.heightAnchor.constraint(equalToConstant: 40.0),
-            self.confidenceLabel.topAnchor.constraint(equalTo: self.photoView.topAnchor, constant: 0),
-            self.confidenceLabel.rightAnchor.constraint(equalTo: self.photoView.rightAnchor, constant: 0),
-            ])
-        
-        self.confidenceLabel.isHidden = true
+            confidenceLabel.widthAnchor.constraint(equalToConstant: 48.0),
+            confidenceLabel.heightAnchor.constraint(equalToConstant: 40.0),
+            confidenceLabel.topAnchor.constraint(equalTo: photoView.topAnchor, constant: 0),
+            confidenceLabel.rightAnchor.constraint(equalTo: photoView.rightAnchor, constant: 0),
+        ])
+
+        confidenceLabel.isHidden = true
     }
-    
 
     func size() -> CGSize {
-        return self.size(UIUserInterfaceSizeClass.regular)
+        return size(UIUserInterfaceSizeClass.regular)
     }
-    
-    func size(_ sizeClass:UIUserInterfaceSizeClass) -> CGSize {
+
+    func size(_ sizeClass: UIUserInterfaceSizeClass) -> CGSize {
         return CollectionViewCellImage.defaultSize(sizeClass)
     }
-    class func defaultSize(_ sizeClass:UIUserInterfaceSizeClass = UIUserInterfaceSizeClass.regular) -> CGSize {
+
+    class func defaultSize(_ sizeClass: UIUserInterfaceSizeClass = UIUserInterfaceSizeClass.regular) -> CGSize {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        
+
         var columns = 2
         switch screenWidth {
-        case 0..<321:
+        case 0 ..< 321:
             columns = (sizeClass == .compact) ? 2 : 2
-        case 322..<479:
+        case 322 ..< 479:
             columns = (sizeClass == .compact) ? 3 : 2
-        case 480..<768:
+        case 480 ..< 768:
             columns = (sizeClass == .compact) ? 4 : 3
-        case 769..<CGFloat.greatestFiniteMagnitude:
+        case 769 ..< CGFloat.greatestFiniteMagnitude:
             columns = (sizeClass == .compact) ? 7 : 5
         default:
             columns = (sizeClass == .compact) ? 5 : 2
         }
         let margin = COLUMN_MARGIN
-        
-        let size:CGFloat = floor((screenWidth - CGFloat(columns - 1) * margin) / CGFloat(columns)) - (32.0 / CGFloat(columns))
-        return CGSize(width: size, height: size);
+
+        let size: CGFloat = floor((screenWidth - CGFloat(columns - 1) * margin) / CGFloat(columns)) - (32.0 / CGFloat(columns))
+        return CGSize(width: size, height: size)
     }
 }
